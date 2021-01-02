@@ -10,12 +10,21 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v1
+
       - name: Setup Node.js
         uses: actions/setup-node@v1
         with:
           node-version: 14
+
       - name: Install dependencies
         run: yarn install --frozen-lockfile
+
+      - name: Lint
+        run: yarn lint
+
+      - name: Test
+        run: yarn test --ci --coverage --maxWorkers=2
+
       - name: Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
