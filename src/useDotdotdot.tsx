@@ -22,13 +22,28 @@ function useDotdotdot(options: UseDotdotdotOptions) {
   const [supportNativeLineClamp, setSupportNativeLineClam] = useState(false);
   const [targetWidth, setTargetWidth] = useState<string | number>(-1);
 
-  const style = {
+  const multiLinesStyle = {
     width: typeof targetWidth === 'string' ? targetWidth : `${targetWidth}px`,
     display: '-webkit-box',
     WebkitBoxOrient: 'vertical',
     WebkitLineClamp: maxLines,
     overflow: 'hidden',
   };
+
+  const singleLineStyle = {
+    width: typeof targetWidth === 'string' ? targetWidth : `${targetWidth}px`,
+    display: 'block',
+    overflow: 'hidden',
+    whiteSpace: 'nowrap',
+    textOverflow: 'ellipsis',
+  };
+
+  const style =
+    maxLines > 1
+      ? supportNativeLineClamp
+        ? multiLinesStyle
+        : {}
+      : singleLineStyle;
 
   const measureTextLength = (text: string) => {
     if (canvasContext.current)
@@ -67,7 +82,7 @@ function useDotdotdot(options: UseDotdotdotOptions) {
   };
 
   const clampText = (text: string) => {
-    if (supportNativeLineClamp) return text;
+    if (maxLines === 1 || supportNativeLineClamp) return text;
     if (targetWidth !== -1) return _clampText(text);
     return text;
   };
@@ -80,7 +95,8 @@ function useDotdotdot(options: UseDotdotdotOptions) {
     if (
       !checkNativeLineClamp() &&
       wrapperRef.current &&
-      canvasContext.current
+      canvasContext.current &&
+      maxLines > 1
     ) {
       const wrapperStyle = window.getComputedStyle(wrapperRef.current);
 
@@ -102,7 +118,7 @@ function useDotdotdot(options: UseDotdotdotOptions) {
       ref: (el: any) => {
         wrapperRef.current = el;
       },
-      style: supportNativeLineClamp ? style : {},
+      style,
     },
     clampText,
   };
