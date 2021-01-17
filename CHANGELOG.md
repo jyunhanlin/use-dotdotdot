@@ -1,3 +1,16 @@
+# [1.1.0](https://github.com/jyunhanlin/use-dotdotdot/compare/v1.0.1...v1.1.0) (2021-01-17)
+
+
+### Bug Fixes
+
+* fix the default target width to 100% ([d98d42e](https://github.com/jyunhanlin/use-dotdotdot/commit/d98d42e37bd849f148c8f3e2162e6241d1896fe6))
+
+
+### Features
+
+* add wrapper props and create getStyle ([73b5143](https://github.com/jyunhanlin/use-dotdotdot/commit/73b51434e83ac76293e516e38e2eb9abfa5c05fa))
+* update the github actions ([5ce85c7](https://github.com/jyunhanlin/use-dotdotdot/commit/5ce85c70d1d60e8294739d5e53e7e079d93a7574))
+
 ## [1.0.1](https://github.com/jyunhanlin/use-dotdotdot/compare/v1.0.0...v1.0.1) (2021-01-13)
 
 
