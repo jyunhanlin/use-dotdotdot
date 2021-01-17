@@ -22,7 +22,7 @@ yarn add use-dotdotdot
 | ---------- | :------------------: | ------------------------------------------------------- |
 | `width?`   | `string` or `number` | The width of wrapper. If not provide, the width is 100% |
 | `maxLines` |       `number`       | How many lines at most                                  |
-| `wrapper?` | `React.ElementType`  | default is `span`                                       |
+| `wrapper?` | `React.ElementType`  | Default value is `span`                                       |
 
 ## Example
 
@@ -42,4 +42,4 @@ const App = () => {
 };
 ```
 
-or use `useDotdotdot` create your owen Component
+or use `useDotdotdot` create your own Component
