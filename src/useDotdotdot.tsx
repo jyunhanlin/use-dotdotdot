@@ -20,7 +20,9 @@ function useDotdotdot(options: UseDotdotdotOptions) {
   const canvasEl = useRef<HTMLCanvasElement>();
   const canvasContext = useRef<CanvasRenderingContext2D | null>();
   const [supportNativeLineClamp, setSupportNativeLineClam] = useState(false);
-  const [targetWidth, setTargetWidth] = useState<string | number>(-1);
+  const [targetWidth, setTargetWidth] = useState<string | number>(
+    width ?? '100%'
+  );
 
   const multiLinesStyle = {
     width: typeof targetWidth === 'string' ? targetWidth : `${targetWidth}px`,
@@ -32,7 +34,7 @@ function useDotdotdot(options: UseDotdotdotOptions) {
 
   const singleLineStyle = {
     width: typeof targetWidth === 'string' ? targetWidth : `${targetWidth}px`,
-    display: 'block',
+    display: 'inline-block',
     overflow: 'hidden',
     whiteSpace: 'nowrap',
     textOverflow: 'ellipsis',
@@ -75,7 +77,13 @@ function useDotdotdot(options: UseDotdotdotOptions) {
     }
 
     return textLines.map((textLine, index) => (
-      <div key={index} style={{ width: `${targetWidth}px` }}>
+      <div
+        key={index}
+        style={{
+          width:
+            typeof targetWidth === 'string' ? targetWidth : `${targetWidth}px`,
+        }}
+      >
         {textLine}
       </div>
     ));
@@ -108,7 +116,9 @@ function useDotdotdot(options: UseDotdotdotOptions) {
       ].join(' ');
 
       setTargetWidth(
-        width ? width : wrapperRef.current.getBoundingClientRect().width ?? 0
+        width
+          ? width
+          : wrapperRef.current.getBoundingClientRect().width ?? '100%'
       );
     }
   }, []);
