@@ -2,7 +2,9 @@
 
 A hook to use CSS property, `line-clamp`, for the long text.
 
-If the browser doesn't support `line-clamp`, use the canvas api, `measureText`, to generate clamp text.
+If only one line, use `text-overflow` for the long text.
+
+If the browser doesn't support `line-clamp` and need multiline text, use the canvas api, `measureText`, to generate clamp text.
 
 ## Installation
 
@@ -16,14 +18,15 @@ yarn add use-dotdotdot
 
 ## Props
 
-| Name       |        Type        | Description                                                            |
-| ---------- | :----------------: | ---------------------------------------------------------------------- |
-| `width?`   | `string or number` | The width of wrapper. If not provide, use the default width of wrapper |
-| `maxLines` |      `number`      | How many lines at most                                                 |
+| Name       |         Type         | Description                                             |
+| ---------- | :------------------: | ------------------------------------------------------- |
+| `width?`   | `string` or `number` | The width of wrapper. If not provide, the width is 100% |
+| `maxLines` |       `number`       | How many lines at most                                  |
+| `wrapper?` | `React.ElementType`  | default is `span`                                       |
 
 ## Example
 
-```javascript
+```jsx
 import { useDotdotdot } from 'use-dotdotdot';
 
 const App = () => {
@@ -38,3 +41,5 @@ const App = () => {
   );
 };
 ```
+
+or use `useDotdotdot` create your owen Component
