@@ -7,15 +7,49 @@ function checkNativeLineClamp() {
   return false;
 }
 
+function getStyle(
+  maxLines: number,
+  supportNativeLineClamp: boolean,
+  targetWidth: string | number
+) {
+  const width =
+    typeof targetWidth === 'string' ? targetWidth : `${targetWidth}px`;
+
+  if (maxLines > 1) {
+    if (supportNativeLineClamp) {
+      return {
+        width,
+        display: '-webkit-box',
+        WebkitBoxOrient: 'vertical',
+        WebkitLineClamp: maxLines,
+        overflow: 'hidden',
+      };
+    }
+
+    return {
+      wordBreak: 'break-all',
+    };
+  }
+
+  return {
+    width,
+    display: 'inline-block',
+    overflow: 'hidden',
+    whiteSpace: 'nowrap',
+    textOverflow: 'ellipsis',
+  };
+}
+
 export interface UseDotdotdotOptions {
   width?: number | string;
   maxLines: number;
+  wrapper?: React.ElementType;
 }
 
 export type TUseDotdotdot = UseDotdotdotOptions;
 
 function useDotdotdot(options: UseDotdotdotOptions) {
-  const { width, maxLines } = options;
+  const { width, maxLines, wrapper } = options;
   const wrapperRef = useRef<HTMLElement | null>();
   const canvasEl = useRef<HTMLCanvasElement>();
   const canvasContext = useRef<CanvasRenderingContext2D | null>();
@@ -24,29 +58,6 @@ function useDotdotdot(options: UseDotdotdotOptions) {
     width ?? '100%'
   );
 
-  const multiLinesStyle = {
-    width: typeof targetWidth === 'string' ? targetWidth : `${targetWidth}px`,
-    display: '-webkit-box',
-    WebkitBoxOrient: 'vertical',
-    WebkitLineClamp: maxLines,
-    overflow: 'hidden',
-  };
-
-  const singleLineStyle = {
-    width: typeof targetWidth === 'string' ? targetWidth : `${targetWidth}px`,
-    display: 'inline-block',
-    overflow: 'hidden',
-    whiteSpace: 'nowrap',
-    textOverflow: 'ellipsis',
-  };
-
-  const style =
-    maxLines > 1
-      ? supportNativeLineClamp
-        ? multiLinesStyle
-        : {}
-      : singleLineStyle;
-
   const measureTextLength = (text: string) => {
     if (canvasContext.current)
       return canvasContext.current.measureText(text).width;
@@ -54,6 +65,7 @@ function useDotdotdot(options: UseDotdotdotOptions) {
   };
 
   const _clampText = (text: string) => {
+    const Wrapper = wrapper ?? 'span';
     const textLines: string[] = [];
     const textLength = text.length;
     let textIndex = 0;
@@ -77,7 +89,7 @@ function useDotdotdot(options: UseDotdotdotOptions) {
     }
 
     return textLines.map((textLine, index) => (
-      <div
+      <Wrapper
         key={index}
         style={{
           width:
@@ -85,7 +97,7 @@ function useDotdotdot(options: UseDotdotdotOptions) {
         }}
       >
         {textLine}
-      </div>
+      </Wrapper>
     ));
   };
 
@@ -128,7 +140,7 @@ function useDotdotdot(options: UseDotdotdotOptions) {
       ref: (el: any) => {
         wrapperRef.current = el;
       },
-      style,
+      style: getStyle(maxLines, supportNativeLineClamp, targetWidth),
     },
     clampText,
   };
