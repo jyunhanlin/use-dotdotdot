@@ -22,7 +22,7 @@ yarn add use-dotdotdot
 | ---------- | :------------------: | ------------------------------------------------------- |
 | `width?`   | `string` or `number` | The width of wrapper. If not provide, the width is 100% |
 | `maxLines` |       `number`       | How many lines at most                                  |
-| `wrapper?` | `React.ElementType`  | Default value is `span`                                       |
+| `wrapper?` | `React.ElementType`  | The wrapper for clamp Text. Default value is `span`     |
 
 ## Example
 
