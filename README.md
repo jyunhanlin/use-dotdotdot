@@ -1,5 +1,7 @@
 # use-dotdotdot
 
+No reason, just make the text dot dot dot!!
+
 A hook to use CSS property, `line-clamp`, for the long text.
 
 If only one line, use `text-overflow` for the long text.
