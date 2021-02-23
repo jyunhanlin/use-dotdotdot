@@ -18,7 +18,10 @@
     "prepare": "tsdx build",
     "size": "size-limit",
     "analyze": "size-limit --why",
-    "semantic-release": "semantic-release"
+    "semantic-release": "semantic-release",
+    "postinstall": "husky install",
+    "prepublishOnly": "pinst --disable",
+    "postpublish": "pinst --enable"
   },
   "keywords": [
     "react",
@@ -31,12 +34,6 @@
   },
   "peerDependencies": {
     "react": ">=16"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "tsdx lint",
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
-    }
   },
   "prettier": {
     "printWidth": 80,
@@ -65,7 +62,8 @@
     "@size-limit/preset-small-lib": "^4.9.2",
     "@types/react": "^17.0.2",
     "@types/react-dom": "^17.0.1",
-    "husky": "^5.0.9",
+    "husky": "5",
+    "pinst": "^2.1.6",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "semantic-release": "^17.3.9",
